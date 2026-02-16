@@ -1,0 +1,749 @@
+<!DOCTYPE html><html lang="he" dir="rtl"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>טיולים - ITRAVELJERUSALEM</title>
+  <meta name="description" content="טיולים - ITRAVELJERUSALEM provides professional תיירות וטיולים services. Specializing in תיירות.">
+  <meta name="keywords" content="תיירות, מדריך טיולים בירושלים עם טכנולוגיה, סיורים פרטיים יוקרתיים בירושלים, טיולים משפחתיים בירושלים עם ילדים">
+  <meta name="robots" content="index, follow">
+  
+  <meta property="og:title" content="טיולים - ITRAVELJERUSALEM">
+  <meta property="og:description" content="טיולים - ITRAVELJERUSALEM provides professional תיירות וטיולים services. Specializing in תיירות.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="טיולים - ITRAVELJERUSALEM">
+  <meta name="twitter:description" content="טיולים - ITRAVELJERUSALEM provides professional תיירות וטיולים services. Specializing in תיירות.">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+<!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '53d87e4b-fe9a-4f01-bd59-79200dc08ee1',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: 44px !important; background: transparent !important; border: none !important; cursor: pointer !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+</head>
+<body>
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  
+  <button class="phone-header-btn" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+  
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="/" class="logo-link">
+        <img src="/assets/itraveljerusalem-logo.webp" alt="ITRAVELJERUSALEM" class="logo" />
+      </a>
+    </div>
+    
+    <ul class="nav-menu" id="navMenu"><li><a href="/tours">טיולים</a></li><li><a href="/itinerary">מסלול</a></li></ul>
+    
+    <div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn">צור קשר</a>
+    </div>
+  </div>
+</nav>
+  
+  <main>
+    <section class="tours-page-intro-section" data-layout-spec="טיולים-page-intro">
+  <div class="tours-page-intro-container">
+    <div class="tours-page-intro-banner">
+      <img data-placeholder="tours-page-intro-image-1" data-context="Wide panoramic view of Jerusalem Old City at golden hour, showing ancient stone walls, domes, and winding streets from an elevated perspective, warm sunlight illuminating the historical architecture, professional travel photography style" width="1200" height="400" src="/assets/site-tours-page-intro-image-1.webp" alt="נוף פנורמי של העיר העתיקה בירושלים בשעת הזהב">
+      <div class="tours-page-intro-banner-gradient"></div>
+    </div>
+    
+    <div class="tours-page-intro-content">
+      <h1>סגנונות טיול לכל קצב</h1>
+      <p class="tours-page-intro-description">המסלולים שלנו מותאמים למגוון רחב של חוויות – מסיורים מעמיקים בנקודות ציון מרכזיות ועד לגילוי פינות נסתרות שרק מקומיים מכירים. אנחנו מתאימים כל מסלול לתחומי העניין שלכם, לצרכי הניידות ולזמן הפנוי, כך שתקבלו חוויה אישית ומותאמת במיוחד.</p>
+      
+      <div class="tours-page-intro-values">
+        <div class="tours-page-intro-value-item">
+          <div class="tours-page-intro-value-icon">
+            <svg data-element-type="icon" data-icon-type="svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h3>תכנון מפגש ברור</h3>
+          <p>נקודת מפגש מדויקת והנחיות הגעה פשוטות</p>
+        </div>
+        
+        <div class="tours-page-intro-value-item">
+          <div class="tours-page-intro-value-icon">
+            <svg data-element-type="icon" data-icon-type="svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h3>איזון בין ידוע למוסתר</h3>
+          <p>שילוב נקודות ציון מרכזיות עם פינות נסתרות אותנטיות</p>
+        </div>
+        
+        <div class="tours-page-intro-value-item">
+          <div class="tours-page-intro-value-icon">
+            <svg data-element-type="icon" data-icon-type="svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h3>טיפים מעשיים כלולים</h3>
+          <p>המלצות לאוכל, תחבורה וזמנים מומלצים לביקור</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="tours-page-intro-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 L0,20 Q100,18 200,22 T400,18 Q500,22 600,18 T800,22 Q900,18 1000,22 T1200,20 L1200,40 Z" fill="#F2F1EF"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="itraveljerusalem-tour-grid-section" data-layout-spec="טיולים-tour-grid">
+  <div class="itraveljerusalem-tour-grid-container">
+    <div class="itraveljerusalem-tour-grid-header">
+      <h2>אפשרויות פופולריות</h2>
+      <p>עיינו במגוון הטיולים שלנו ופנו אלינו להצעה מותאמת אישית. כל טיול מתוכנן בקפידה כדי להציע לכם חוויה בלתי נשכחת בירושלים.</p>
+    </div>
+
+    <div class="itraveljerusalem-tour-grid-cards">
+      <!-- Card 1: Old City Essentials -->
+      <article class="itraveljerusalem-tour-card">
+        <div class="itraveljerusalem-tour-card-image">
+          <img data-placeholder="itraveljerusalem-tour-grid-image-1" data-context="Ancient stone walls and narrow alleyways of Jerusalem Old City, golden Jerusalem stone architecture, Western Wall plaza visible in background, warm afternoon light, authentic historical atmosphere for Jerusalem tourism business" width="600" height="400" src="/assets/site-itraveljerusalem-tour-grid-image-1.webp" alt="העיר העתיקה בירושלים - סיור מהותי">
+        </div>
+        <div class="itraveljerusalem-tour-card-content">
+          <h3>מהותי העיר העתיקה</h3>
+          <p>סיור מעמיק ברבעים ההיסטוריים, המקומות הקדושים והסמטאות המרתקות של העיר העתיקה.</p>
+          <div class="itraveljerusalem-tour-card-info">
+            <p><strong>משך:</strong> 3-4 שעות</p>
+            <p><strong>מתאים ל:</strong> מבקרים לראשונה, משפחות</p>
+            <p><strong>זמן התחלה אופייני:</strong> בוקר או אחר הצהריים</p>
+            <p><strong>נגישות:</strong> מסלול כולל מדרגות, נדרשת יכולת הליכה בינונית</p>
+          </div>
+          <a href="#contact" class="itraveljerusalem-tour-card-link">פנו אלינו לפרטים</a>
+        </div>
+      </article>
+
+      <!-- Card 2: Culinary Market Walk -->
+      <article class="itraveljerusalem-tour-card">
+        <div class="itraveljerusalem-tour-card-image">
+          <img data-placeholder="itraveljerusalem-tour-grid-image-2" data-context="Vibrant Mahane Yehuda market in Jerusalem, colorful spice stalls, fresh produce displays, bustling market atmosphere, locals and tourists, authentic Israeli street food, warm market lighting for Jerusalem culinary tour" width="600" height="400" src="/assets/site-itraveljerusalem-tour-grid-image-2.webp" alt="סיור קולינרי בשוק מחנה יהודה">
+        </div>
+        <div class="itraveljerusalem-tour-card-content">
+          <h3>סיור קולינרי בשוק</h3>
+          <p>חוויה חושית מלאה בשוק מחנה יהודה - טעימות, סיפורים ותרבות מקומית אותנטית.</p>
+          <div class="itraveljerusalem-tour-card-info">
+            <p><strong>משך:</strong> 2.5-3 שעות</p>
+            <p><strong>מתאים ל:</strong> חובבי אוכל, קבוצות קטנות</p>
+            <p><strong>זמן התחלה אופייני:</strong> בוקר או צהריים</p>
+            <p><strong>נגישות:</strong> מסלול נגיש, קצב נינוח</p>
+          </div>
+          <a href="#contact" class="itraveljerusalem-tour-card-link">פנו אלינו לפרטים</a>
+        </div>
+      </article>
+
+      <!-- Card 3: Museums & Modern Culture -->
+      <article class="itraveljerusalem-tour-card">
+        <div class="itraveljerusalem-tour-card-image">
+          <img data-placeholder="itraveljerusalem-tour-grid-image-3" data-context="Israel Museum Jerusalem exterior with modern architecture, sculpture garden with contemporary art installations, bright daylight, cultural tourism atmosphere, elegant museum setting for Jerusalem tours" width="600" height="400" src="/assets/site-itraveljerusalem-tour-grid-image-3.webp" alt="מוזיאונים ותרבות מודרנית בירושלים">
+        </div>
+        <div class="itraveljerusalem-tour-card-content">
+          <h3>מוזיאונים ותרבות מודרנית</h3>
+          <p>גלו את הצד התרבותי והאמנותי של ירושלים במוזיאונים מובילים ושכונות עכשוויות.</p>
+          <div class="itraveljerusalem-tour-card-info">
+            <p><strong>משך:</strong> 4-5 שעות</p>
+            <p><strong>מתאים ל:</strong> חובבי אמנות, מבוגרים</p>
+            <p><strong>זמן התחלה אופייני:</strong> בוקר</p>
+            <p><strong>נגישות:</strong> מוזיאונים נגישים במלואם</p>
+          </div>
+          <a href="#contact" class="itraveljerusalem-tour-card-link">פנו אלינו לפרטים</a>
+        </div>
+      </article>
+
+      <!-- Card 4: Viewpoints at Golden Hour -->
+      <article class="itraveljerusalem-tour-card">
+        <div class="itraveljerusalem-tour-card-image">
+          <img data-placeholder="itraveljerusalem-tour-grid-image-4" data-context="Jerusalem panoramic view at sunset golden hour, Dome of the Rock glowing, Mount of Olives viewpoint, dramatic golden light over ancient city, silhouettes of cypress trees, romantic atmosphere for Jerusalem photography tour" width="600" height="400" src="/assets/site-itraveljerusalem-tour-grid-image-4.webp" alt="נקודות תצפית בשעת הזהב">
+        </div>
+        <div class="itraveljerusalem-tour-card-content">
+          <h3>נקודות תצפית בשעת הזהב</h3>
+          <p>טיול צילומי לנקודות התצפית היפות ביותר בירושלים בשעות הערב הקסומות.</p>
+          <div class="itraveljerusalem-tour-card-info">
+            <p><strong>משך:</strong> 2-3 שעות</p>
+            <p><strong>מתאים ל:</strong> צלמים, זוגות, חובבי נופים</p>
+            <p><strong>זמן התחלה אופייני:</strong> שעתיים לפני השקיעה</p>
+            <p><strong>נגישות:</strong> כולל הליכה קלה, חלק מהנקודות נגישות</p>
+          </div>
+          <a href="#contact" class="itraveljerusalem-tour-card-link">פנו אלינו לפרטים</a>
+        </div>
+      </article>
+
+      <!-- Card 5: Family Discovery Day -->
+      <article class="itraveljerusalem-tour-card">
+        <div class="itraveljerusalem-tour-card-image">
+          <img data-placeholder="itraveljerusalem-tour-grid-image-5" data-context="Happy family with children exploring Jerusalem, interactive museum exhibits, kids engaging with historical displays, Biblical Zoo Jerusalem animals, family-friendly tour atmosphere, smiling children learning, bright daylight for family tourism" width="600" height="400" src="/assets/site-itraveljerusalem-tour-grid-image-5.webp" alt="יום גילוי משפחתי בירושלים">
+        </div>
+        <div class="itraveljerusalem-tour-card-content">
+          <h3>יום גילוי משפחתי</h3>
+          <p>טיול מותאם במיוחד למשפחות עם ילדים, משלב למידה, כיף ופעילויות אינטראקטיביות.</p>
+          <div class="itraveljerusalem-tour-card-info">
+            <p><strong>משך:</strong> 4-5 שעות</p>
+            <p><strong>מתאים ל:</strong> משפחות עם ילדים בגילאי 5-15</p>
+            <p><strong>זמן התחלה אופייני:</strong> בוקר</p>
+            <p><strong>נגישות:</strong> מסלול נגיש לעגלות, הפסקות תכופות</p>
+          </div>
+          <a href="#contact" class="itraveljerusalem-tour-card-link">פנו אלינו לפרטים</a>
+        </div>
+      </article>
+
+      <!-- Card 6: Day Trip Highlights -->
+      <article class="itraveljerusalem-tour-card">
+        <div class="itraveljerusalem-tour-card-image">
+          <img data-placeholder="itraveljerusalem-tour-grid-image-6" data-context="Masada fortress aerial view, Dead Sea floating experience, Ein Gedi desert oasis waterfall, dramatic desert landscape, day trip from Jerusalem, adventurous tourism atmosphere, bright sunny day for Israel day tours" width="600" height="400" src="/assets/site-itraveljerusalem-tour-grid-image-6.webp" alt="טיול יום - מסלול מובחר">
+        </div>
+        <div class="itraveljerusalem-tour-card-content">
+          <h3>טיול יום - מסלול מובחר</h3>
+          <p>יום מלא באטרקציות מרכזיות מחוץ לירושלים - ים המלח, מצדה או אזורים נוספים.</p>
+          <div class="itraveljerusalem-tour-card-info">
+            <p><strong>משך:</strong> 8-10 שעות</p>
+            <p><strong>מתאים ל:</strong> מטיילים אקטיביים, קבוצות</p>
+            <p><strong>זמן התחלה אופייני:</strong> בוקר מוקדם</p>
+            <p><strong>נגישות:</strong> משתנה לפי יעד, נדרשת יכולת הליכה טובה</p>
+          </div>
+          <a href="#contact" class="itraveljerusalem-tour-card-link">פנו אלינו לפרטים</a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- Bottom Divider: Route-line motif -->
+  <div class="itraveljerusalem-tour-grid-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,60 L0,30 Q150,28 300,32 T600,28 Q750,32 900,28 T1140,30 L1160,30 L1160,60 Z" fill="var(--bg-light)"></path>
+      <circle cx="1160" cy="30" r="4" fill="var(--accent)"></circle>
+    </svg>
+  </div>
+</section>
+
+<section class="tours-badges-section" data-layout-spec="טיולים-badges">
+  <div class="tours-badges-container">
+    <div class="tours-badges-header">
+      <h2>מעוצב למטיילים אמיתיים</h2>
+      <p>כל טיול שלנו נבנה עם תשומת לב לקצב, בהירות ונוחות. אנחנו מבינים שחוויה מושלמת מתחילה בתכנון מושכל ובליווי מקצועי.</p>
+    </div>
+
+    <div class="tours-badges-content">
+      <div class="tours-badges-stamps">
+        <div class="tours-badge-stamp">
+          <div class="tours-stamp-icon">
+            <svg data-element-type="icon" data-icon-type="svg" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5" fill="none"></circle>
+              <path d="M16 8L18.5 13L24 14L20 18L21 24L16 21L11 24L12 18L8 14L13.5 13L16 8Z" fill="currentColor"></path>
+            </svg>
+          </div>
+          <h3>הכי נמכר</h3>
+          <p>הטיולים האהובים ביותר על המשפחות והמטיילים שלנו – מוכחים, מומלצים, ועם דירוגים מעולים מאות אורחים מרוצים.</p>
+        </div>
+
+        <div class="tours-badge-stamp">
+          <div class="tours-stamp-icon">
+            <svg data-element-type="icon" data-icon-type="svg" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5" fill="none"></circle>
+              <path d="M12 14C12 12.8954 12.8954 12 14 12C15.1046 12 16 12.8954 16 14C16 15.1046 15.1046 16 14 16C12.8954 16 12 15.1046 12 14Z" fill="currentColor"></path>
+              <path d="M18 14C18 12.8954 18.8954 12 20 12C21.1046 12 22 12.8954 22 14C22 15.1046 21.1046 16 20 16C18.8954 16 18 15.1046 18 14Z" fill="currentColor"></path>
+              <path d="M10 20C10 18.8954 10.8954 18 12 18H22C23.1046 18 24 18.8954 24 20V22C24 23.1046 23.1046 24 22 24H12C10.8954 24 10 23.1046 10 22V20Z" fill="currentColor"></path>
+            </svg>
+          </div>
+          <h3>ידידותי למשפחות</h3>
+          <p>מסלולים מותאמים לילדים, קצב נוח, הפסקות תכופות ופעילויות מרתקות שגם הקטנים נהנים מהן – כי טיול משפחתי צריך להיות כיף לכולם.</p>
+        </div>
+
+        <div class="tours-badge-stamp">
+          <div class="tours-stamp-icon">
+            <svg data-element-type="icon" data-icon-type="svg" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5" fill="none"></circle>
+              <rect x="10" y="10" width="12" height="14" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"></rect>
+              <line x1="13" y1="14" x2="19" y2="14" stroke="currentColor" stroke-width="1.5"></line>
+              <line x1="13" y1="17" x2="19" y2="17" stroke="currentColor" stroke-width="1.5"></line>
+              <line x1="13" y1="20" x2="16" y2="20" stroke="currentColor" stroke-width="1.5"></line>
+            </svg>
+          </div>
+          <h3>תרבות במרכז</h3>
+          <p>כל אתר מלווה בסיפור, הקשר היסטורי ומשמעות תרבותית עמוקה. אנחנו לא רק מראים – אנחנו מסבירים, משתפים ומעשירים.</p>
+        </div>
+      </div>
+
+      <div class="tours-badges-image-wrapper">
+        <img data-placeholder="tours-badges-image-1" data-context="A warm, candid moment of a professional tour guide showing something interesting to a small group of engaged tourists in Jerusalem. Natural lighting, genuine smiles, cultural context visible in background. The guide is pointing or gesturing enthusiastically while tourists lean in with interest. Bright, inviting atmosphere that conveys personal connection and cultural storytelling." width="600" height="700" src="/assets/site-tours-badges-image-1.webp" alt="מדריך טיולים מקצועי מלווה קבוצה קטנה בירושלים">
+      </div>
+    </div>
+  </div>
+
+  <div class="tours-badges-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,60 L0,35 L400,35 L420,25 L800,25 L820,35 L1200,35 L1200,60 Z" fill="var(--bg-light)"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="tours-faq-section" data-layout-spec="טיולים-faq">
+  <div class="tours-faq-container">
+    <div class="tours-faq-header">
+      <h2>שאלות ותשובות</h2>
+      <p>כל מה שצריך לדעת לפני הטיול הבא שלכם בירושלים. אנחנו כאן כדי להסיר כל ספק ולהבטיח שתהנו מחוויה מושלמת.</p>
+    </div>
+    
+    <div class="tours-faq-grid">
+      <article class="tours-faq-card">
+        <h3>מה כלול בטיול?</h3>
+        <p>כל טיול כולל מדריך מקצועי דובר עברית, כניסה לאתרים (לפי התוכנית), מים וחטיפים קלים. בטיולים פרטיים ניתן להוסיף ארוחות, הסעות או שירותים נוספים לפי הצורך.</p>
+      </article>
+      
+      <article class="tours-faq-card">
+        <h3>כמה זמן נמשך טיול ממוצע?</h3>
+        <p>רוב הטיולים נמשכים בין 3-4 שעות, אך ניתן להתאים את משך הזמן לפי העדפותיכם. טיולים פרטיים יכולים להיות קצרים יותר או ארוכים יותר, תלוי בתוכנית המותאמת אישית.</p>
+      </article>
+      
+      <article class="tours-faq-card">
+        <h3>היכן נקודת המפגש?</h3>
+        <p>נקודת המפגש משתנה בהתאם לטיול. בדרך כלל נפגשים בכניסה לעיר העתיקה או בשער יפו. פרטים מדויקים על נקודת המפגש נשלחים במייל אישור ההזמנה, יום לפני הטיול.</p>
+      </article>
+      
+      <article class="tours-faq-card">
+        <h3>איזו נעליים ולבוש מומלצים?</h3>
+        <p>מומלץ להגיע עם נעליים נוחות להליכה (סניקרס או נעלי טיולים). ירושלים כוללת הליכה על אבנים עתיקות ושבילים לא אחידים. בקיץ חשוב להביא כובע ומשקפי שמש, בחורף – מעיל קל.</p>
+      </article>
+      
+      <article class="tours-faq-card">
+        <h3>מה קורה במזג אוויר קיצוני?</h3>
+        <p>אנחנו עוקבים אחר תחזית מזג האויר ומתאימים את המסלול במידת הצורך. במקרה של גשם חזק או חום קיצוני, נציע חלופות מקורות או נקבע מועד חלופי. הבטיחות והנוחות שלכם תמיד בראש סדר העדיפויות.</p>
+      </article>
+      
+      <article class="tours-faq-card">
+        <h3>מה ההבדל בין טיול פרטי לקבוצתי?</h3>
+        <p>טיולים קבוצתיים (עד 12 משתתפים) מציעים אווירה חברתית ומחיר נוח יותר. טיולים פרטיים מותאמים אישית לקצב שלכם, לתחומי העניין ולזמנים הנוחים לכם – אידיאלי למשפחות, זוגות או קבוצות חברים.</p>
+      </article>
+    </div>
+  </div>
+  
+  <div class="tours-faq-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="faq-divider-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#0B1F3B;stop-opacity:0.4"></stop>
+          <stop offset="100%" style="stop-color:#0B1F3B;stop-opacity:0.8"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M0,60 L0,30 L1200,30 L1200,60 Z" fill="url(#faq-divider-gradient)"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="tours-cta-split-section" data-layout-spec="טיולים-cta-split">
+  <div class="tours-cta-split-container">
+    <div class="tours-cta-split-content">
+      <h2>לא בטוחים איזה טיול מתאים לכם? נמליץ על המסלול המושלם</h2>
+      <p>שתפו אותנו בתחומי העניין שלכם, גודל הקבוצה ומסגרת הזמן – ונציע לכם הצעה ברורה ומותאמת אישית. אנחנו כאן כדי להפוך את הביקור שלכם בירושלים לחוויה בלתי נשכחת.</p>
+      <a href="#contact" class="tours-cta-button">צרו קשר לתכנון</a>
+    </div>
+    <div class="tours-cta-split-image-wrapper">
+      <div class="tours-cta-backplate"></div>
+      <img data-placeholder="tours-cta-split-image-1" data-context="A warm, inviting photo of a diverse group of tourists enjoying a guided tour in Jerusalem's Old City, with ancient stone walls and golden Jerusalem stone architecture in the background, natural sunlight, genuine smiles, professional tour guide pointing to historical site" width="600" height="400" src="/assets/site-tours-cta-split-image-1.webp" alt="קבוצת תיירים נהנית מסיור מודרך בעיר העתיקה בירושלים">
+    </div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <div class="footer-column footer-about">
+        <img src="/assets/itraveljerusalem-logo.webp" alt="ITRAVELJERUSALEM" class="logo" />
+        <p class="footer-description">חווית תיירות ייחודית בירושלים - גלו את קסם העיר העתיקה עם מדריכים מקצועיים ומסלולים מותאמים אישית</p>
+      </div>
+      
+      <div class="footer-column footer-links">
+        <h3 class="footer-heading">קישורים מהירים</h3>
+        <ul class="footer-nav">
+          <li><a href="/tours">טיולים</a></li>
+          <li><a href="/itinerary">מסלול</a></li>
+          <li><a href="/contact">צור קשר</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column footer-contact">
+        <h3 class="footer-heading">יצירת קשר</h3>
+        <ul class="contact-list">
+          <li>
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:[business_email]">[business_email]</a>
+          </li>
+          <li>
+            <i class="fas fa-phone"></i>
+            <a href="tel:[business_phone]">[business_phone]</a>
+          </li>
+          <li><a href="/"><i class="fas fa-map-marker-alt"></i>
+            <span>[business_address]</span></a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column footer-social">
+        <h3 class="footer-heading">עקבו אחרינו</h3>
+        <div class="social-links">
+          <a href="[facebook_handle]" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="[instagram_handle]" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="[whatsapp_handle]" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <a href="/privacy">מדיניות פרטיות</a>
+        <span class="separator">|</span>
+        <a href="/terms">תנאים והגבלות</a>
+        <span class="separator">|</span>
+        <a href="/accessibility">הצהרת נגישות</a>
+      </div>
+      <div class="footer-copyright">
+        <p>© 2026 ITRAVELJERUSALEM. כל הזכויות שמורות.</p>
+      </div>
+      <div class="footer-attribution">
+        <a href="https://zappy5.com" target="_blank" class="zappy-attribution" rel="noopener noreferrer">Generated by Zappy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <script src="/script.js"></script>
+
+    <div data-integration="accessibility:toolbar"></div>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body></html>
